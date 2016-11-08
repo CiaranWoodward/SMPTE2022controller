@@ -9,17 +9,20 @@ LD_SRCS += \
 C_SRCS += \
 ../src/ledcontrol.c \
 ../src/main.c \
-../src/platform.c 
+../src/platform.c \
+../src/smpte2022_control.c 
 
 OBJS += \
 ./src/ledcontrol.o \
 ./src/main.o \
-./src/platform.o 
+./src/platform.o \
+./src/smpte2022_control.o 
 
 C_DEPS += \
 ./src/ledcontrol.d \
 ./src/main.d \
-./src/platform.d 
+./src/platform.d \
+./src/smpte2022_control.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
