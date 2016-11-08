@@ -78,12 +78,8 @@ int main()
 			delay_human();
 		}
     }
+
     print("Done.\n\r");
-
-
-
-
-
     cleanup_platform();
     return 0;
 }

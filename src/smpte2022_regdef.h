@@ -1,0 +1,61 @@
+/*
+ * smpte2022_regdef.h
+ *
+ *  Created on: 8 Nov 2016
+ *      Author: cw15g13
+ */
+
+#ifndef SRC_SMPTE2022_REGDEF_H_
+#define SRC_SMPTE2022_REGDEF_H_
+
+#define SMPTE2022_CONTROL                   0x0000
+#define SMPTE2022_RESET                     0x0004
+#define SMPTE2022_CHANNEL_ACCESS            0x000C
+#define SMPTE2022_SYS_CFG                   0x0020
+#define SMPTE2022_VERSION                   0x0024
+#define SMPTE2022_NETWORK_PATH_DIFFERENTIAL 0x0028
+#define SMPTE2022_FEC_PROCESSING_DELAY      0x0030
+#define SMPTE2022_FEC_BUF_BASE_ADDR         0x0034
+#define SMPTE2022_FEC_BUF_POOL_SIZE         0x0038
+#define SMPTE2022_PRI_RECV_PKT_CNT          0x003C
+#define SMPTE2022_SEC_RECV_PKT_CNT          0x0040
+#define SMPTE2022_PRI_ERR_PKT_CNT           0x0044
+#define SMPTE2022_SEC_ERR_PKT_CNT           0x0048
+#define SMPTE2022_PRI_DISCARD_PKT_CNT       0x004C
+#define SMPTE2022_SEC_DISCARD_PKT_CNT       0x0050
+#define SMPTE2022_GEN_STAT_RESET            0x0054
+
+#define SMPTE2022_IP_HDR_PARAM              0x0084
+#define SMPTE2022_MATCH_VLAN                0x0088
+#define SMPTE2022_MATCH_DEST_IP_ADDR        0x008C
+#define SMPTE2022_MATCH_SRC_IP_ADDR         0x009C
+#define SMPTE2022_MATCH_SRC_PORT            0x00AC
+#define SMPTE2022_MATCH_DEST_PORT           0x00B0
+#define SMPTE2022_MATCH_SEL                 0x00B4
+#define SMPTE2022_LINK_REORDERED_PKT_CNT    0x00B8
+#define SMPTE2022_LINK_STAT_RESET           0x00BC
+#define SMPTE2022_LINK_VALID_MEDIA_PKT_CNT  0x00C0
+#define SMPTE2022_LINK_VALID_FEC_PKT_CNT    0x00C4
+
+#define SMPTE2022_CHAN_EN                   0x0100
+#define SMPTE2022_CHAN_TIMEOUT              0x0104
+#define SMPTE2022_CHAN_STAT_RESET           0x010C
+#define SMPTE2022_MATCH_SSRC                0x0110
+#define SMPTE2022_SDI_PKT_STATUS            0x0114
+#define SMPTE2022_VID_SRC_FMT               0x0118
+#define SMPTE2022_PLAYOUT_DELAY             0x011C
+#define SMPTE2022_FEC_PARAM                 0x0124
+#define SMPTE2022_SEAMLESS_PROTECT          0x0128
+#define SMPTE2022_MEDIA_BUF_BASE_ADDR       0x012C
+#define SMPTE2022_MEDIA_PKT_BUF_SIZE        0x0130
+#define SMPTE2022_CHAN_VALID_MEDIA_PKT_CNT  0x0134
+#define SMPTE2022_REC_PKT_CNT               0x0138
+#define SMPTE2022_DUP_PKT_CNT               0x013C
+#define SMPTE2022_CURR_PKT_BUFFERED         0x0140
+#define SMPTE2022_PKT_INTERVAL              0x0144
+#define SMPTE2022_CHAN_VALID_FEC_PKT_CNT    0x0148
+#define SMPTE2022_MEDIA_BUFFER_OV           0x0154
+#define SMPTE2022_UNREC_PKT_CNT             0x0158
+#define SMPTE2022_OOR_PKT_CNT               0x0160
+
+#endif /* SRC_SMPTE2022_REGDEF_H_ */
