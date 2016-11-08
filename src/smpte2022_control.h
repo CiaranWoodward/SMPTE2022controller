@@ -8,6 +8,8 @@
 #ifndef SRC_SMPTE2022_CONTROL_H_
 #define SRC_SMPTE2022_CONTROL_H_
 
+#include "xil_types.h"
+
 void smpte2022_init(uint32_t baseAddr);
 
 void smpte2022_reset(void);
