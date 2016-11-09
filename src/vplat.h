@@ -13,6 +13,6 @@
 #define DELAY_HUMAN 1000000
 
 void vplat_assert(uint8_t condition);
-void delay_human();
+void vplat_delayHuman();
 
 #endif /* SRC_VPLAT_H_ */

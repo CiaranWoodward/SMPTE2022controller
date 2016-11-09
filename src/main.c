@@ -61,14 +61,14 @@ int main()
     ledcontrol_init();
 
     ledcontrol_setBitfield(0);
-    delay_human();
+    vplat_delayHuman();
     ledcontrol_setBitfield(0xFF);
-    delay_human();
+    vplat_delayHuman();
 
     while (1){
 		for(int j = 0; j < 8; j++){
 			ledcontrol_setLed(j, LED_TOGGLE);
-			delay_human();
+			vplat_delayHuman();
 		}
     }
 
