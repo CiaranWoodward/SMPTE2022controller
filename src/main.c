@@ -49,16 +49,8 @@
 #include "platform.h"
 #include "xil_printf.h"
 
+#include "vplat.h"
 #include "ledcontrol.h"
-
-#define DELAY_HUMAN 1000000
-
-void delay_human(){	//Simple convenience function to delay an effect (such as LED) so it is noticeable by the human eye
-#ifndef __SIM
-	for(int i = 0; i < DELAY_HUMAN; i++) i = i;
-#endif
-}
-
 
 int main()
 {
@@ -72,6 +64,7 @@ int main()
     delay_human();
     ledcontrol_setBitfield(0xFF);
     delay_human();
+
     while (1){
 		for(int j = 0; j < 8; j++){
 			ledcontrol_setLed(j, LED_TOGGLE);

@@ -10,6 +10,10 @@
 
 #include "xil_types.h"
 
+/*
+ * LOW LEVEL DRIVERS
+ */
+
 void smpte2022_init(uint32_t baseAddr);
 
 void smpte2022_reset(void);
