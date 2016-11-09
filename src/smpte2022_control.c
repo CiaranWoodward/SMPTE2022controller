@@ -69,12 +69,78 @@ void smpte2022_channel_matchDestIp(uint8_t isEnabled, uint32_t ip4Addr){
 	vplat_assert(smpte2022_sem); //Assert semaphore is actually held
 	matchSelDirtyHandle();
 
+	if(isEnabled){
+		Xil_Out32(smpte2022_baseAddr + SMPTE2022_MATCH_DEST_IP_ADDR, ip4Addr);
+		smpte2022_matchField |= (1<<2);
+	}
+	else{
+		smpte2022_matchField &= ~(1<<2);
+	}
 }
 
-void smpte2022_channel_matchSrcIp(uint8_t isEnabled, uint32_t ip4Addr);
-void smpte2022_channel_matchDestPort(uint8_t isEnabled, uint16_t port);
-void smpte2022_channel_matchSrcPort(uint8_t isEnabled, uint16_t port);
-void smpte2022_channel_matchVLAN(uint8_t isEnabled, uint16_t VLAN_TCI);
+void smpte2022_channel_matchSrcIp(uint8_t isEnabled, uint32_t ip4Addr){
+	vplat_assert(smpte2022_sem); //Assert semaphore is actually held
+	matchSelDirtyHandle();
+
+	if(isEnabled){
+		Xil_Out32(smpte2022_baseAddr + SMPTE2022_MATCH_SRC_IP_ADDR, ip4Addr);
+		smpte2022_matchField |= (1<<1);
+	}
+	else{
+		smpte2022_matchField &= ~(1<<1);
+	}
+}
+
+void smpte2022_channel_matchDestPort(uint8_t isEnabled, uint16_t port){
+	vplat_assert(smpte2022_sem); //Assert semaphore is actually held
+	matchSelDirtyHandle();
+
+	if(isEnabled){
+		u32 out = Xil_In32(smpte2022_baseAddr + SMPTE2022_MATCH_DEST_PORT);
+		out &= 0xFF00;
+		out |= port;
+		Xil_Out32(smpte2022_baseAddr + SMPTE2022_MATCH_DEST_PORT, out);
+		smpte2022_matchField |= (1<<4);
+	}
+	else{
+		smpte2022_matchField &= ~(1<<4);
+	}
+}
+
+void smpte2022_channel_matchSrcPort(uint8_t isEnabled, uint16_t port){
+	vplat_assert(smpte2022_sem); //Assert semaphore is actually held
+	matchSelDirtyHandle();
+
+	if(isEnabled){
+		u32 out = Xil_In32(smpte2022_baseAddr + SMPTE2022_MATCH_SRC_PORT);
+		out &= 0xFF00;
+		out |= port;
+		Xil_Out32(smpte2022_baseAddr + SMPTE2022_MATCH_SRC_PORT, out);
+		smpte2022_matchField |= (1<<3);
+	}
+	else{
+		smpte2022_matchField &= ~(1<<3);
+	}
+}
+
+void smpte2022_channel_matchVLAN(uint8_t isEnabled, uint16_t VLAN_TCI){
+	vplat_assert(smpte2022_sem); //Assert semaphore is actually held
+	matchSelDirtyHandle();
+
+	if(isEnabled){
+		u32 out = Xil_In32(smpte2022_baseAddr + SMPTE2022_MATCH_VLAN);
+		out &= 0xFF00;
+		out |= (1<<31) | VLAN_TCI;
+		Xil_Out32(smpte2022_baseAddr + SMPTE2022_MATCH_VLAN, out);
+		smpte2022_matchField |= (0x01);
+	}
+	else{
+		u32 out = Xil_In32(smpte2022_baseAddr + SMPTE2022_MATCH_VLAN);
+		out &= 0x7F00;
+		Xil_Out32(smpte2022_baseAddr + SMPTE2022_MATCH_VLAN, out);
+		smpte2022_matchField &= ~(0x01);
+	}
+}
 
 //All config below here is per channel, but shared between streams
 void smpte2022_channel_setEnabled(uint8_t isEnabled);
