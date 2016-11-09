@@ -51,7 +51,7 @@ void smpte2022_channel_getSemaphore(uint8_t channelID, uint8_t isSecondary){
 }
 
 static void matchSelDirtyHandle(){
-	//Todo: Follow the steps on p30 of the xilinx doc to correctly manage this for dual link SMPTE
+	//TODO: Follow the steps on p30 of the xilinx doc to correctly manage this for dual link SMPTE
 	if(!smpte2022_matchSelDirty){
 		smpte2022_matchSelDirty = 1;
 		smpte2022_matchField = Xil_In32(smpte2022_baseAddr + SMPTE2022_MATCH_SEL);
@@ -143,12 +143,39 @@ void smpte2022_channel_matchVLAN(uint8_t isEnabled, uint16_t VLAN_TCI){
 }
 
 //All config below here is per channel, but shared between streams
-void smpte2022_channel_setEnabled(uint8_t isEnabled);
-void smpte2022_channel_setBypassRtpTimestamp(uint8_t isBypassEnabled);
-void smpte2022_channel_setPlayoutDelay(uint32_t playoutDelay_27Mhz);
+void smpte2022_channel_setEnabled(uint8_t isEnabled){
+	if(smpte2022_matchSelDirty){
+		//Then enabling will be handled later
+		smpte2022_sChanEnabled = isEnabled ? 1 : 0;
+	}
+	else{
+		u32 chanen = Xil_In32(smpte2022_baseAddr + SMPTE2022_CHAN_EN);
+		if(isEnabled) chanen |= 0x01;
+		else chanen &= ~(0x01);
+		Xil_Out32(smpte2022_baseAddr + SMPTE2022_CHAN_EN, chanen);
+	}
+}
+
+void smpte2022_channel_setBypassRtpTimestamp(uint8_t isBypassEnabled){
+	u32 chanen = Xil_In32(smpte2022_baseAddr + SMPTE2022_CHAN_EN);
+	if(isBypassEnabled) chanen |= 0x02;
+	else chanen &= ~(0x02);
+	Xil_Out32(smpte2022_baseAddr + SMPTE2022_CHAN_EN, chanen);
+}
+
+void smpte2022_channel_setPlayoutDelay(uint32_t playoutDelay_27Mhz){
+	Xil_Out32(smpte2022_baseAddr + SMPTE2022_PLAYOUT_DELAY, playoutDelay_27Mhz);
+}
 
 //Length of individual RTP packets is 1396 bytes so "endAddr = baseAddr + (numPackets * 1396)"
-void smpte2022_channel_setDDR3Params(uint32_t baseAddr, uint16_t numPackets);
+void smpte2022_channel_setDDR3Params(uint32_t baseAddr, uint16_t numPackets){
+	Xil_Out32(smpte2022_baseAddr + SMPTE2022_MEDIA_BUF_BASE_ADDR, baseAddr);
+
+	u32 bufsiz = Xil_In32(smpte2022_baseAddr + SMPTE2022_MEDIA_PKT_BUF_SIZE);
+	bufsiz &= 0xFF00;
+	bufsiz |= numPackets;
+	Xil_Out32(smpte2022_baseAddr + SMPTE2022_MEDIA_PKT_BUF_SIZE, bufsiz);
+}
 
 //Channel semaphore must be released in order to commit changes to a particular channel
 void smpte2022_channel_releaseSemaphore(void){
