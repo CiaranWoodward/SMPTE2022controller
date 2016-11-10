@@ -51,6 +51,7 @@
 
 #include "vplat.h"
 #include "ledcontrol.h"
+#include "smpte2022_control.h"
 
 int main()
 {
@@ -65,14 +66,24 @@ int main()
     ledcontrol_setBitfield(0xFF);
     vplat_delayHuman();
 
-    while (1){
+    print("Init SMPTE2022.\n\r");
+
+	smpte2022_init(XPAR_V_SMPTE2022_56_RX_0_BASEADDR);
+	smpte2022_channel_getSemaphore(0, 0);
+	smpte2022_channel_setDDR3Params(XPAR_MIG7SERIES_0_BASEADDR, 300);
+	smpte2022_channel_setEnabled(1);
+	smpte2022_channel_matchDestIp(1, 0x00000000);
+	smpte2022_channel_releaseSemaphore();
+
+	print("Done.\n\r");
+
+	while(1){
 		for(int j = 0; j < 8; j++){
 			ledcontrol_setLed(j, LED_TOGGLE);
 			vplat_delayHuman();
 		}
-    }
+	}
 
-    print("Done.\n\r");
     cleanup_platform();
     return 0;
 }
