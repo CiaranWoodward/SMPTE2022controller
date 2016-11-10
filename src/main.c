@@ -72,7 +72,7 @@ int main()
 	smpte2022_channel_getSemaphore(0, 0);
 	smpte2022_channel_setDDR3Params(XPAR_MIG7SERIES_0_BASEADDR, 300);
 	smpte2022_channel_setEnabled(1);
-	smpte2022_channel_matchDestIp(1, 0x00000000);
+	smpte2022_channel_matchDestIp(1, 0xEF00277A); //239.0.39.122
 	smpte2022_channel_releaseSemaphore();
 
 	print("Done.\n\r");
