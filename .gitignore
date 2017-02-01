@@ -1,5 +1,7 @@
 #Custom Gitignore
 
+Debug/*
+
 *.o
 *.so
 *.elf
