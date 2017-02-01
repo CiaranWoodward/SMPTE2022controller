@@ -52,6 +52,7 @@
 #include "vplat.h"
 #include "ledcontrol.h"
 #include "smpte2022_control.h"
+#include "eth_init.h"
 
 int main()
 {
@@ -61,10 +62,16 @@ int main()
 
     ledcontrol_init();
 
+
     ledcontrol_setBitfield(0);
     vplat_delayHuman();
     ledcontrol_setBitfield(0xFF);
     vplat_delayHuman();
+
+
+    print("Init 10GEth.\n\r");
+
+    ethernet_init(XPAR_AXI_10G_ETHERNET_0_BASEADDR);
 
     print("Init SMPTE2022.\n\r");
 
@@ -76,6 +83,8 @@ int main()
 	smpte2022_channel_releaseSemaphore();
 
 	print("Done.\n\r");
+
+
 
 	while(1){
 		for(int j = 0; j < 8; j++){
